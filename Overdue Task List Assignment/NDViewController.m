@@ -7,12 +7,15 @@
 //
 
 #import "NDViewController.h"
+#import "NDAddTaskViewController.h"
+#import <Accelerate/Accelerate.h>
 
 @interface NDViewController ()
 
 @end
 
 @implementation NDViewController
+#define ADDED_TASKS_KEY @"Added Tasks Array"
 
 - (void)viewDidLoad
 {
@@ -32,9 +35,34 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     
+    //retrieve the array of task property lists, and turn them into task objects and save them in the tasks array property.
+    NSArray *tasksAsPropertyLists = [[NSUserDefaults standardUserDefaults] objectForKey:ADDED_TASKS_KEY];
+    for (NSDictionary *dictionary in tasksAsPropertyLists) {
+        NDTask *task = [[NDTask alloc] initWithData:dictionary];
+        [self.tasks addObject:task];
+    }
+    
+    //set tableview datasource and delegate equal to self, and remove seperators from empty cells
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    
     
     
 }
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+        if ([segue.destinationViewController isKindOfClass:[NDAddTaskViewController class]]) {
+            NDAddTaskViewController *addTaskVC = segue.destinationViewController;
+            addTaskVC.delegate = self;
+            
+        }
+    }
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -42,15 +70,112 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma Button Actions
+#pragma Add Task VC Delegate Methods
+-(void)didAddTask:(NDTask *)task;
+{
+    //perform lazy instantiation on self.tasks, then add the new task to that array. Create a tasksAsPropertyList variable that holds the array retrieved from NSUserDefaults, and if no such array exists then alloc one. Then add the task's property list to that array. Then put the array back into NSUserDefaults and save it. Dismiss the modal and reload the tableview data.
+    [self.tasks addObject:task];
+    NSMutableArray *tasksAsPropertyLists = [[[NSUserDefaults standardUserDefaults] arrayForKey:ADDED_TASKS_KEY] mutableCopy];
+    if (!tasksAsPropertyLists) tasksAsPropertyLists = [[NSMutableArray alloc] init];
+    [tasksAsPropertyLists addObject:[self taskAsPropertyList:task]];
+    [[NSUserDefaults standardUserDefaults] setObject:tasksAsPropertyLists forKey:ADDED_TASKS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.tableView reloadData];
+    
+}
+
+-(void)didCancel
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma Table View Data Source
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.tasks count];
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"taskCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    //Configure the cell
+    NDTask *task = [self.tasks objectAtIndex:indexPath.row];
+    cell.textLabel.text = task.title;
+    cell.detailTextLabel.text = [self convertDateIntoDueDateFormat:task.dueDate];
+    
+    //Add the completed? button
+    UIImage *uncompletedTask = [UIImage imageNamed:@"UncompletedTaskIcon"];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:uncompletedTask forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor clearColor];
+    cell.accessoryView = button;
+    //[button addTarget:self action:@selector(accessoryButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    return cell;
+    
+}
+
+#pragma helper methods
+
+//lazy instantiation for task array
+-(NSMutableArray *)tasks
+{
+    if (!_tasks) {
+        _tasks = [[NSMutableArray alloc] init];
+    }
+    return _tasks;
+}
+
+//turn the task object into a dictionary of property lists
+-(NSDictionary *)taskAsPropertyList:(NDTask *)task
+{
+    NSDictionary *taskPropertyList =
+                    @{TITLE : task.title,
+                      DESCRIPTION : task.description,
+                      DUE_DATE : task.dueDate,
+                      COMPLETION : @(task.completed) };
+    return taskPropertyList;
+}
+
+
+
+#pragma Other Methods
+
+//turn NSdate into a string that can be displayed in the cell
+-(NSString *)convertDateIntoDueDateFormat:(NSDate *)date
+{
+    int timeInterval = [date timeIntervalSinceNow];
+    int daysLeft = floor((double)timeInterval / 86400);
+    int hoursLeft = (timeInterval % 86400) / 3600;
+    
+    NSString *dueIn;
+    if (timeInterval <= 0) {
+        dueIn = [NSString stringWithFormat:@"Due in %id %ih", abs(daysLeft), abs(hoursLeft)];
+    }
+    else dueIn = @"OVERDUE";
+    
+    return dueIn;
+}
+
+
+
+#pragma Actions
 
 - (IBAction)reorderTaskBarButtonPressed:(UIBarButtonItem *)sender
 {
-    
+    //reorder tasks action
 }
 
 - (IBAction)addTaskBarButtonPressed:(UIBarButtonItem *)sender
 {
     [self performSegueWithIdentifier:@"toAddTaskVC" sender:sender];
 }
+
 @end

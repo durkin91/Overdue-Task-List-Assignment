@@ -7,13 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NDTask.h"
 
-@interface NDAddTaskViewController : UIViewController
+@protocol NDAddTaskViewControllerDelegate <NSObject>
+
+-(void)didAddTask:(NDTask *)task;
+-(void)didCancel;
+
+@end
+
+@interface NDAddTaskViewController : UIViewController <UITextViewDelegate>
+@property (weak, nonatomic) id <NDAddTaskViewControllerDelegate> delegate;
+
+//IBOutlets
 @property (strong, nonatomic) IBOutlet UITextField *titleTextField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextField;
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 
-
+//Actions
 - (IBAction)cancelButtonPressed:(UIButton *)sender;
 - (IBAction)addTaskButtonPressed:(UIButton *)sender;
 

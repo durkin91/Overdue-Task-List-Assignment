@@ -26,8 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //
+    [self.descriptionTextField setDelegate:self];
     
 }
 
@@ -35,6 +34,7 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
 }
 
 /*
@@ -48,11 +48,26 @@
 }
 */
 
+#pragma Actions
+
 - (IBAction)cancelButtonPressed:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate didCancel];
 }
 
-- (IBAction)addTaskButtonPressed:(UIButton *)sender {
+- (IBAction)addTaskButtonPressed:(UIButton *)sender
+{
+    NSDictionary *taskData = @{TITLE : self.titleTextField.text, DESCRIPTION : self.descriptionTextField.text, DUE_DATE : self.datePicker.date, COMPLETION : @NO};
+    NDTask *task = [[NDTask alloc] initWithData:taskData];
+    [self.delegate didAddTask:task];
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [self.descriptionTextField resignFirstResponder];
+        return NO;
+    }
+    else return YES;
 }
 @end

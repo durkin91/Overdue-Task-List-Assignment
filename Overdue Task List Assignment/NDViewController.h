@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NDAddTaskViewController.h"
 
-@interface NDViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface NDViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NDAddTaskViewControllerDelegate>
+
+@property (strong, nonatomic) NSMutableArray *tasks;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

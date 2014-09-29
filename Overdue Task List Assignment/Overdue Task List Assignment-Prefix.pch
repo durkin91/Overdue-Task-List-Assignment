@@ -10,6 +10,11 @@
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
 
+#define TITLE @"Title"
+#define DESCRIPTION @"Description"
+#define DUE_DATE @"Date"
+#define COMPLETION @"Was it completed?"
+
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
