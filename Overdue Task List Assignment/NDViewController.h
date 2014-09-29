@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NDViewController : UIViewController
+@interface NDViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+
+- (IBAction)reorderTaskBarButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)addTaskBarButtonPressed:(UIBarButtonItem *)sender;
+
 
 @end

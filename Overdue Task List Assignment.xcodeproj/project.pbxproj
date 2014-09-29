@@ -22,8 +22,9 @@
 		15A335C119D82F350054FBFB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15A335BF19D82F350054FBFB /* InfoPlist.strings */; };
 		15A335C319D82F350054FBFB /* Overdue_Task_List_AssignmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A335C219D82F350054FBFB /* Overdue_Task_List_AssignmentTests.m */; };
 		15A335CD19D849040054FBFB /* BackgroundPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A335CC19D849040054FBFB /* BackgroundPhoto.png */; };
-		15A335D219D84FE60054FBFB /* reorderIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A335D019D84FE60054FBFB /* reorderIcon.png */; };
-		15A335D419D850670054FBFB /* addTaskIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A335D319D850670054FBFB /* addTaskIcon.png */; };
+		15A335D719D948210054FBFB /* NDAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A335D619D948210054FBFB /* NDAddTaskViewController.m */; };
+		15A335DA19D94D350054FBFB /* NDDetailTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A335D919D94D350054FBFB /* NDDetailTaskViewController.m */; };
+		15A335E019D952BE0054FBFB /* NDEditTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A335DF19D952BE0054FBFB /* NDEditTaskViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +58,12 @@
 		15A335C019D82F350054FBFB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		15A335C219D82F350054FBFB /* Overdue_Task_List_AssignmentTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Overdue_Task_List_AssignmentTests.m; sourceTree = "<group>"; };
 		15A335CC19D849040054FBFB /* BackgroundPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundPhoto.png; sourceTree = "<group>"; };
-		15A335D019D84FE60054FBFB /* reorderIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reorderIcon.png; sourceTree = "<group>"; };
-		15A335D319D850670054FBFB /* addTaskIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addTaskIcon.png; sourceTree = "<group>"; };
+		15A335D519D948210054FBFB /* NDAddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDAddTaskViewController.h; sourceTree = "<group>"; };
+		15A335D619D948210054FBFB /* NDAddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDAddTaskViewController.m; sourceTree = "<group>"; };
+		15A335D819D94D350054FBFB /* NDDetailTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDDetailTaskViewController.h; sourceTree = "<group>"; };
+		15A335D919D94D350054FBFB /* NDDetailTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDDetailTaskViewController.m; sourceTree = "<group>"; };
+		15A335DE19D952BE0054FBFB /* NDEditTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDEditTaskViewController.h; path = ../NDEditTaskViewController.h; sourceTree = "<group>"; };
+		15A335DF19D952BE0054FBFB /* NDEditTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NDEditTaskViewController.m; path = ../NDEditTaskViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +128,12 @@
 				15A335A919D82F350054FBFB /* Main.storyboard */,
 				15A335AC19D82F350054FBFB /* NDViewController.h */,
 				15A335AD19D82F350054FBFB /* NDViewController.m */,
+				15A335D519D948210054FBFB /* NDAddTaskViewController.h */,
+				15A335D619D948210054FBFB /* NDAddTaskViewController.m */,
+				15A335D819D94D350054FBFB /* NDDetailTaskViewController.h */,
+				15A335D919D94D350054FBFB /* NDDetailTaskViewController.m */,
+				15A335DE19D952BE0054FBFB /* NDEditTaskViewController.h */,
+				15A335DF19D952BE0054FBFB /* NDEditTaskViewController.m */,
 				15A335AF19D82F350054FBFB /* Images.xcassets */,
 				15A3359E19D82F350054FBFB /* Supporting Files */,
 			);
@@ -162,8 +173,6 @@
 		15A335CE19D8491A0054FBFB /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				15A335D319D850670054FBFB /* addTaskIcon.png */,
-				15A335D019D84FE60054FBFB /* reorderIcon.png */,
 				15A335CC19D849040054FBFB /* BackgroundPhoto.png */,
 			);
 			name = Images;
@@ -246,12 +255,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15A335D219D84FE60054FBFB /* reorderIcon.png in Resources */,
 				15A335CD19D849040054FBFB /* BackgroundPhoto.png in Resources */,
 				15A335B019D82F350054FBFB /* Images.xcassets in Resources */,
 				15A335A219D82F350054FBFB /* InfoPlist.strings in Resources */,
 				15A335AB19D82F350054FBFB /* Main.storyboard in Resources */,
-				15A335D419D850670054FBFB /* addTaskIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,7 +278,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A335AE19D82F350054FBFB /* NDViewController.m in Sources */,
+				15A335E019D952BE0054FBFB /* NDEditTaskViewController.m in Sources */,
+				15A335D719D948210054FBFB /* NDAddTaskViewController.m in Sources */,
 				15A335A819D82F350054FBFB /* NDAppDelegate.m in Sources */,
+				15A335DA19D94D350054FBFB /* NDDetailTaskViewController.m in Sources */,
 				15A335A419D82F350054FBFB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

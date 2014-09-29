@@ -42,4 +42,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma Button Actions
+
+- (IBAction)reorderTaskBarButtonPressed:(UIBarButtonItem *)sender
+{
+    
+}
+
+- (IBAction)addTaskBarButtonPressed:(UIBarButtonItem *)sender
+{
+    [self performSegueWithIdentifier:@"toAddTaskVC" sender:sender];
+}
 @end
