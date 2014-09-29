@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1510877F19D9A226007C619C /* ILTranslucentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1510877E19D9A226007C619C /* ILTranslucentView.m */; };
 		15A3359819D82F350054FBFB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3359719D82F350054FBFB /* Foundation.framework */; };
 		15A3359A19D82F350054FBFB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3359919D82F350054FBFB /* CoreGraphics.framework */; };
 		15A3359C19D82F350054FBFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3359B19D82F350054FBFB /* UIKit.framework */; };
@@ -27,7 +28,6 @@
 		15A335E019D952BE0054FBFB /* NDEditTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A335DF19D952BE0054FBFB /* NDEditTaskViewController.m */; };
 		15A335E519D965F10054FBFB /* NDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A335E419D965F10054FBFB /* NDTask.m */; };
 		15A335E919D9996E0054FBFB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A335E819D9996E0054FBFB /* Accelerate.framework */; };
-		15A335EC19D99A530054FBFB /* UIERealTimeBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A335EB19D99A530054FBFB /* UIERealTimeBlurView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1510877D19D9A226007C619C /* ILTranslucentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILTranslucentView.h; sourceTree = "<group>"; };
+		1510877E19D9A226007C619C /* ILTranslucentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILTranslucentView.m; sourceTree = "<group>"; };
 		15A3359419D82F350054FBFB /* Overdue Task List Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Overdue Task List Assignment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15A3359719D82F350054FBFB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15A3359919D82F350054FBFB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -71,8 +73,6 @@
 		15A335E319D965F10054FBFB /* NDTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDTask.h; sourceTree = "<group>"; };
 		15A335E419D965F10054FBFB /* NDTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NDTask.m; sourceTree = "<group>"; };
 		15A335E819D9996E0054FBFB /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		15A335EA19D99A530054FBFB /* UIERealTimeBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIERealTimeBlurView.h; path = "../../../../../Downloads/ios-realtimeblur-master/RealTimeBlur/Classes/UIERealTimeBlurView.h"; sourceTree = "<group>"; };
-		15A335EB19D99A530054FBFB /* UIERealTimeBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIERealTimeBlurView.m; path = "../../../../../Downloads/ios-realtimeblur-master/RealTimeBlur/Classes/UIERealTimeBlurView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,8 +204,8 @@
 				15A335D919D94D350054FBFB /* NDDetailTaskViewController.m */,
 				15A335DE19D952BE0054FBFB /* NDEditTaskViewController.h */,
 				15A335DF19D952BE0054FBFB /* NDEditTaskViewController.m */,
-				15A335EA19D99A530054FBFB /* UIERealTimeBlurView.h */,
-				15A335EB19D99A530054FBFB /* UIERealTimeBlurView.m */,
+				1510877D19D9A226007C619C /* ILTranslucentView.h */,
+				1510877E19D9A226007C619C /* ILTranslucentView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -310,12 +310,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A335AE19D82F350054FBFB /* NDViewController.m in Sources */,
+				1510877F19D9A226007C619C /* ILTranslucentView.m in Sources */,
 				15A335E019D952BE0054FBFB /* NDEditTaskViewController.m in Sources */,
 				15A335D719D948210054FBFB /* NDAddTaskViewController.m in Sources */,
 				15A335A819D82F350054FBFB /* NDAppDelegate.m in Sources */,
 				15A335E519D965F10054FBFB /* NDTask.m in Sources */,
 				15A335DA19D94D350054FBFB /* NDDetailTaskViewController.m in Sources */,
-				15A335EC19D99A530054FBFB /* UIERealTimeBlurView.m in Sources */,
 				15A335A419D82F350054FBFB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,6 +521,7 @@
 				15A335C819D82F350054FBFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		15A335C919D82F350054FBFB /* Build configuration list for PBXNativeTarget "Overdue Task List AssignmentTests" */ = {
 			isa = XCConfigurationList;
@@ -529,6 +530,7 @@
 				15A335CB19D82F350054FBFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

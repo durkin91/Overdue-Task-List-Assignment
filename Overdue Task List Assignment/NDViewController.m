@@ -9,6 +9,7 @@
 #import "NDViewController.h"
 #import "NDAddTaskViewController.h"
 #import <Accelerate/Accelerate.h>
+#import "ILTranslucentView.h"
 
 @interface NDViewController ()
 
@@ -108,6 +109,12 @@
     cell.textLabel.text = task.title;
     cell.detailTextLabel.text = [self convertDateIntoDueDateFormat:task.dueDate];
     
+    return cell;
+    
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     //Add the completed? button
     UIImage *uncompletedTask = [UIImage imageNamed:@"UncompletedTaskIcon"];
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -117,8 +124,15 @@
     cell.accessoryView = button;
     //[button addTarget:self action:@selector(accessoryButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
     
+    //Make the cell translucent
+    ILTranslucentView *translucentView = [[ILTranslucentView alloc] initWithFrame:cell.frame];
+    translucentView.alpha = .95;
+    [cell setBackgroundView:translucentView];
     
-    return cell;
+    [cell setBackgroundColor:[UIColor clearColor]];
+    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+    [cell.detailTextLabel setBackgroundColor:[UIColor clearColor]];
+    [cell.contentView setBackgroundColor:[UIColor clearColor]];
     
 }
 
