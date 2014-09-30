@@ -16,5 +16,7 @@
 @property (nonatomic) BOOL completed;
 
 -(NDTask *)initWithData:(NSDictionary *)data;
-
+-(NSString *)convertDateIntoDueDateFormat;
+-(int)daysLeftUntilTaskDue;
+-(UIColor *)colorForDueDateString;
 @end

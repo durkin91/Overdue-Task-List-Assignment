@@ -140,13 +140,8 @@
         cell.textLabel.textColor = [UIColor blackColor];
         
         //setup 'due in' label with the right colors by using containsString helper method to check if the string contains '0d'
-        NSString *dueDateString = [self convertDateIntoDueDateFormat:task.dueDate];
-        cell.detailTextLabel.text = dueDateString;
-        if ([dueDateString isEqualToString:@"OVERDUE"]) {
-            cell.detailTextLabel.textColor = [StyleKit red];
-        }
-        else if ([self containsString:@"0d" inString:dueDateString]) cell.detailTextLabel.textColor = [StyleKit orange];
-        else cell.detailTextLabel.textColor = [StyleKit green];
+        cell.detailTextLabel.text = [task convertDateIntoDueDateFormat];
+        cell.detailTextLabel.textColor = [task colorForDueDateString];
         
         //change cell background to translucent
         ILTranslucentView *translucentView = [[ILTranslucentView alloc] initWithFrame:cell.frame];
@@ -239,33 +234,6 @@
     return taskPropertyList;
 }
 
-#pragma Other Methods
-
-//turn NSdate into a string that can be displayed in the cell
--(NSString *)convertDateIntoDueDateFormat:(NSDate *)date
-{
-    int timeInterval = [date timeIntervalSinceNow];
-    int daysLeft = floor((double)timeInterval / 86400);
-    int hoursLeft = (timeInterval % 86400) / 3600;
-    
-    NSString *dueIn;
-    if (timeInterval >= 0) {
-        dueIn = [NSString stringWithFormat:@"Due in %id %ih", abs(daysLeft), abs(hoursLeft)];
-    }
-    else dueIn = @"OVERDUE";
-    
-    return dueIn;
-}
-
-//Use on dueDateString to check how long there is left, and apply colors to the detailTextLabel
--(BOOL)containsString:(NSString *)littleString inString:(NSString *)bigString
-{
-    NSRange rangeValue = [bigString rangeOfString:littleString options:NSCaseInsensitiveSearch];
-
-    if (rangeValue.length > 0) return YES;
-    else return NO;
-
-}
 
 #pragma Actions
 

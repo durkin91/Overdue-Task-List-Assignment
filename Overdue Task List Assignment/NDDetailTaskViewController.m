@@ -30,10 +30,20 @@
     //setup background image
     self.view.layer.contents = (id)[UIImage imageNamed:@"BlurredBackgroundImage"].CGImage;
     
+    //setup content
     self.taskTitleLabel.text = self.task.title;
     self.taskDescriptionLabel.text = self.task.description;
-    //use helper method to have due date
     
+    //setup due date
+    if (self.task.completed == YES) {
+        self.taskDueDateLabel.textColor = [UIColor whiteColor];
+        self.taskDueDateLabel.text = @"COMPLETED";
+    }
+    else {
+        self.taskDueDateLabel.text = [self.task convertDateIntoDueDateFormat];
+        self.taskDueDateLabel.textColor = [self.task colorForDueDateString];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning

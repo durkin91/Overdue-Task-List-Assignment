@@ -106,6 +106,7 @@
 		1510878319DA47EE007C619C /* Styling classes */ = {
 			isa = PBXGroup;
 			children = (
+				1510877D19D9A226007C619C /* ILTranslucentView.h */,
 				1510877E19D9A226007C619C /* ILTranslucentView.m */,
 				1510878019DA47E2007C619C /* StyleKit.h */,
 				1510878119DA47E2007C619C /* StyleKit.m */,
@@ -217,7 +218,6 @@
 				15A335D919D94D350054FBFB /* NDDetailTaskViewController.m */,
 				15A335DE19D952BE0054FBFB /* NDEditTaskViewController.h */,
 				15A335DF19D952BE0054FBFB /* NDEditTaskViewController.m */,
-				1510877D19D9A226007C619C /* ILTranslucentView.h */,
 				1510878319DA47EE007C619C /* Styling classes */,
 			);
 			name = View;
