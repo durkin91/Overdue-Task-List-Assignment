@@ -28,9 +28,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *taskTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *taskDueDateLabel;
 @property (strong, nonatomic) IBOutlet UITextView *taskDescriptionTextView;
+@property (strong, nonatomic) IBOutlet UIButton *checkmarkButton;
 
 
-
+- (IBAction)checkmarkButtonPressed:(UIButton *)sender;
 - (IBAction)editTaskBarButtonPressed:(UIBarButtonItem *)sender;
 
 @end

@@ -149,9 +149,6 @@
     [button addTarget:self action:@selector(checkButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
     cell.accessoryView = button;
     
-    //Change backgroud color of delete editingAccessory view. Not sure if this works though??
-    cell.editingAccessoryView.backgroundColor = [StyleKit red];
-    
     
     //Check if the task is completed. If not, change accessory icon to uncompleted icon and give it translucent background.
     if (task.completed == NO) {

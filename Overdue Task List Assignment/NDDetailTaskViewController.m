@@ -84,6 +84,17 @@
         self.taskDueDateLabel.text = [self.task convertDateIntoDueDateFormat];
         self.taskDueDateLabel.textColor = [self.task colorForDueDateString];
     }
+    
+    //setup Checkmark button
+    if (self.task.completed == NO) {
+        [self.checkmarkButton setBackgroundImage:[UIImage imageNamed:@"WhiteUncompletedTaskIcon"] forState:UIControlStateNormal];
+        NSLog(@"NO!");
+    }
+    else {
+        [self.checkmarkButton setBackgroundImage:[UIImage imageNamed:@"WhiteCompletedTaskIcon"] forState:UIControlStateNormal];
+        NSLog(@"YES!");
+    }
+    
 }
 
 #pragma NDEditTaskVC Delegate Methods
@@ -116,6 +127,26 @@
 */
 
 #pragma Actions on current VC
+
+//Change the completed status of the task based on this button, and save it
+- (IBAction)checkmarkButtonPressed:(UIButton *)sender
+{
+    if (!self.task.completed) {
+        self.task.completed = YES;
+        [self.checkmarkButton setBackgroundImage:[UIImage imageNamed:@"WhiteCompletedTaskIcon"] forState:UIControlStateNormal];
+        self.taskDueDateLabel.text = @"COMPLETED";
+        self.taskDueDateLabel.textColor = [UIColor whiteColor];
+        [self.delegate saveTask:self.task atIndexPath:self.indexPath];
+        
+    }
+    
+    else {
+        self.task.completed = NO;
+        [self.checkmarkButton setBackgroundImage:[UIImage imageNamed:@"WhiteUncompletedTaskIcon"] forState:UIControlStateNormal];
+        [self updateLabelsWithCurrentTask];
+        [self.delegate saveTask:self.task atIndexPath:self.indexPath];
+    }
+}
 
 - (IBAction)editTaskBarButtonPressed:(UIBarButtonItem *)sender
 {
