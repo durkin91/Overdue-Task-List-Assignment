@@ -134,6 +134,7 @@
     //Configure the cell
     NDTask *task = [self.tasks objectAtIndex:indexPath.row];
     cell.textLabel.text = task.title;
+    cell.showsReorderControl = YES;
     
     //making the cell background clear
     [cell setBackgroundColor:[UIColor clearColor]];
@@ -247,20 +248,27 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.tasks removeObjectAtIndex:indexPath.row];
-        NSMutableArray *newSavedTasksData = [[NSMutableArray alloc] init];
-        for (NDTask *task in self.tasks) {
-            [newSavedTasksData addObject:[self taskAsPropertyList:task]];
-        }
-        [[NSUserDefaults standardUserDefaults] setObject:newSavedTasksData forKey:ADDED_TASKS_KEY];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self saveTasksToNSUserDefaults];
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
     }
 }
 
-//Drag to reorder each row
--tableView
+//Tell tableview that it is allowed to be reordered
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+//Where the tableview reordering actually happens
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    NDTask *task = [self.tasks objectAtIndex:sourceIndexPath.row];
+    [self.tasks removeObjectAtIndex:sourceIndexPath.row];
+    [self.tasks insertObject:task atIndex:destinationIndexPath.row];
+    [self saveTasksToNSUserDefaults];
+}
 
 
 #pragma helper methods
@@ -285,12 +293,26 @@
     return taskPropertyList;
 }
 
+//Saves self.tasks data into NSUserdefaults
+-(void)saveTasksToNSUserDefaults
+{
+    NSMutableArray *newSavedTasksData = [[NSMutableArray alloc] init];
+    for (NDTask *task in self.tasks) {
+        [newSavedTasksData addObject:[self taskAsPropertyList:task]];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:newSavedTasksData forKey:ADDED_TASKS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 #pragma Actions
 
 - (IBAction)reorderTaskBarButtonPressed:(UIBarButtonItem *)sender
 {
-    //reorder tasks action
+    if (!self.tableView.editing)
+        self.tableView.editing = YES;
+    else
+        self.tableView.editing = NO;
 }
 
 - (IBAction)addTaskBarButtonPressed:(UIBarButtonItem *)sender
