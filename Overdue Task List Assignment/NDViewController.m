@@ -106,7 +106,17 @@
 
 -(void)saveTask:(NDTask *)task atIndexPath:(NSIndexPath *)indexPath
 {
+    [self.tasks replaceObjectAtIndex:indexPath.row withObject:task];
     
+    NSMutableArray *editedTasks = [[NSMutableArray alloc] init];
+    for (NDTask *task in self.tasks) {
+        [editedTasks addObject:[self taskAsPropertyList:task]];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:editedTasks forKey:ADDED_TASKS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self.tableView reloadData];
+
 }
 
 
@@ -248,6 +258,9 @@
         
     }
 }
+
+//Drag to reorder each row
+-tableView
 
 
 #pragma helper methods
