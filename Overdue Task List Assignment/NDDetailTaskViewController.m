@@ -30,6 +30,17 @@
     //setup background image
     self.view.layer.contents = (id)[UIImage imageNamed:@"BlurredBackgroundImage"].CGImage;
     
+    //setup nav bar
+    UIImage* backButtonArrow = [UIImage imageNamed:@"BackArrowIcon"];
+    CGRect backframe = CGRectMake(250, 9, 30, 13);
+    UIButton *backbutton = [[UIButton alloc] initWithFrame:backframe];
+    [backbutton setBackgroundImage:backButtonArrow forState:UIControlStateNormal];
+    [backbutton addTarget:self action:@selector(Btn_back:)
+         forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backbarbutton =[[UIBarButtonItem alloc] initWithCustomView:backbutton];
+    self.navigationItem.leftBarButtonItem = backbarbutton;
+    //[backbutton release];
+    
     //setup content
     self.taskTitleLabel.text = self.task.title;
     self.taskDescriptionLabel.text = self.task.description;
@@ -64,5 +75,11 @@
 */
 
 - (IBAction)editTaskBarButtonPressed:(UIBarButtonItem *)sender {
+}
+
+-(IBAction)Btn_back:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 @end

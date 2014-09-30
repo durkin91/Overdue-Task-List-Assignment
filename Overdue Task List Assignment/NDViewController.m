@@ -37,7 +37,6 @@
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNext-Regular" size:17], NSFontAttributeName, nil]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
-    
     //retrieve the array of task property lists, and turn them into task objects and save them in the tasks array property.
     NSArray *tasksAsPropertyLists = [[NSUserDefaults standardUserDefaults] objectForKey:ADDED_TASKS_KEY];
     for (NSDictionary *dictionary in tasksAsPropertyLists) {
@@ -54,6 +53,7 @@
     
     
 }
+
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
