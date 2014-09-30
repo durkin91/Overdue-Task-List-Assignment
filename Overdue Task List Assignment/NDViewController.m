@@ -128,27 +128,41 @@
     [cell.detailTextLabel setBackgroundColor:[UIColor clearColor]];
     [cell.contentView setBackgroundColor:[UIColor clearColor]];
     
-    
-    
-//    NDTask *task = [self.tasks objectAtIndex:indexPath.row];
-//    if (task.completed == NO) {
-//        <#statements#>
-//    }
-   
-    
-    //Add the completed? button
-    UIImage *uncompletedTask = [UIImage imageNamed:@"UncompletedTaskIcon"];
+    //set up accessory view button frame
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setBackgroundImage:uncompletedTask forState:UIControlStateNormal];
     button.backgroundColor = [UIColor clearColor];
     cell.accessoryView = button;
-    //[button addTarget:self action:@selector(accessoryButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
+
     
-    //Make the cell translucent
-    ILTranslucentView *translucentView = [[ILTranslucentView alloc] initWithFrame:cell.frame];
-    translucentView.alpha = .95;
-    [cell setBackgroundView:translucentView];
+    //Check if the task is completed. If not, change accessory icon to uncompleted icon and give it translucent background.
+    NDTask *task = [self.tasks objectAtIndex:indexPath.row];
+    if (task.completed == NO) {
+        //change accessory icon
+        UIImage *uncompletedTask = [UIImage imageNamed:@"UncompletedTaskIcon"];
+        [button setBackgroundImage:uncompletedTask forState:UIControlStateNormal];
+        
+        //change cell background to translucent
+        ILTranslucentView *translucentView = [[ILTranslucentView alloc] initWithFrame:cell.frame];
+        translucentView.alpha = .95;
+        [cell setBackgroundView:translucentView];
+        
+    }
+    
+    //keep background clear, change title to white with strikethrough, change accessory icon to completed
+    else {
+        //change icon
+        UIImage *completedTask = [UIImage imageNamed:@"CompletedTaskIcon"];
+        [button setBackgroundImage:completedTask forState:UIControlStateNormal];
+        
+        //change formatting
+        cell.textLabel.textColor = [UIColor whiteColor];
+        NSDictionary* attributes = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]};
+        NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:task.title attributes:attributes];
+        cell.textLabel.attributedText = attributedString;
+    }
+
+
     
 }
 
