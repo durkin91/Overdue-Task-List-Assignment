@@ -18,7 +18,7 @@
 @end
 
 @implementation NDViewController
-#define ADDED_TASKS_KEY @"Added Tasks Array"
+
 
 - (void)viewDidLoad
 {
@@ -68,8 +68,8 @@
             NDDetailTaskViewController *detailTaskVC = segue.destinationViewController;
             NSIndexPath *indexPath = sender;
             detailTaskVC.task = [self.tasks objectAtIndex:indexPath.row];
-            
-            //reset
+            detailTaskVC.indexPath = indexPath;
+            detailTaskVC.delegate = self;
         }
     }
 }
@@ -100,6 +100,13 @@
 -(void)didCancel
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma Detail Task VC Delegate
+
+-(void)saveTask:(NDTask *)task atIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 

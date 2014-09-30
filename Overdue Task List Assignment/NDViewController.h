@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "NDAddTaskViewController.h"
+#import "NDDetailTaskViewController.h"
 
-@interface NDViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NDAddTaskViewControllerDelegate>
+@interface NDViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NDAddTaskViewControllerDelegate, NDDetailTaskVCDelegate>
 
 @property (strong, nonatomic) NSMutableArray *tasks;
 

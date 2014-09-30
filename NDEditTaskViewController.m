@@ -54,11 +54,29 @@
 }
 */
 
-- (IBAction)saveTaskButtonPressed:(UIButton *)sender {
-}
-- (IBAction)addTaskButtonPressed:(UIButton *)sender {
+- (IBAction)cancelButtonPressed:(UIButton *)sender
+{
+    [self.delegate didCancel];
 }
 
-- (IBAction)cancelButtonPressed:(UIButton *)sender {
+- (IBAction)saveTaskButtonPressed:(UIButton *)sender
+{
+    self.task.title = self.titleTextField.text;
+    self.task.description = self.descriptionTextField.text;
+    self.task.dueDate = self.datePicker.date;
+    
+    [self.delegate didEditTask:self.task];
 }
+
+
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [self.descriptionTextField resignFirstResponder];
+        return NO;
+    }
+    else return YES;
+}
+
 @end

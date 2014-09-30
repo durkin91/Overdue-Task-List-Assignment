@@ -43,24 +43,8 @@
     self.navigationItem.leftBarButtonItem = backbarbutton;
     //[backbutton release];
     
-    
-    //setup content
-    self.taskTitleLabel.text = self.task.title;
-    self.taskDescriptionTextView.text = self.task.description;
-    
-    //setup description text view appearance
-    self.taskDescriptionTextView.backgroundColor = [UIColor clearColor];
-    self.taskDescriptionTextView.textColor = [UIColor whiteColor];
-
-    //setup due date
-    if (self.task.completed == YES) {
-        self.taskDueDateLabel.textColor = [UIColor whiteColor];
-        self.taskDueDateLabel.text = @"COMPLETED";
-    }
-    else {
-        self.taskDueDateLabel.text = [self.task convertDateIntoDueDateFormat];
-        self.taskDueDateLabel.textColor = [self.task colorForDueDateString];
-    }
+    //Update labels, formatting, etc
+    [self updateLabelsWithCurrentTask];
 
 }
 
@@ -75,7 +59,49 @@
     if ([sender isKindOfClass:[UIBarButtonItem class]] && [segue.destinationViewController isKindOfClass:[NDEditTaskViewController class]]) {
         NDEditTaskViewController *editTaskVC = segue.destinationViewController;
         editTaskVC.task = self.task;
+        editTaskVC.delegate = self;
     }
+}
+
+#pragma Helper Methods
+
+-(void)updateLabelsWithCurrentTask
+{
+    //setup content
+    self.taskTitleLabel.text = self.task.title;
+    self.taskDescriptionTextView.text = self.task.description;
+    
+    //setup description text view appearance
+    self.taskDescriptionTextView.backgroundColor = [UIColor clearColor];
+    self.taskDescriptionTextView.textColor = [UIColor whiteColor];
+    
+    //setup due date
+    if (self.task.completed == YES) {
+        self.taskDueDateLabel.textColor = [UIColor whiteColor];
+        self.taskDueDateLabel.text = @"COMPLETED";
+    }
+    else {
+        self.taskDueDateLabel.text = [self.task convertDateIntoDueDateFormat];
+        self.taskDueDateLabel.textColor = [self.task colorForDueDateString];
+    }
+}
+
+#pragma NDEditTaskVC Delegate Methods
+
+-(void)didCancel
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)didEditTask:(NDTask *)task
+{
+    //save the edited task to this VC's task property, but delegate the saving to NSUserDefaults to the delegate.
+    self.task = task;
+    [self.delegate saveTask:task atIndexPath:self.indexPath];
+    
+    [self updateLabelsWithCurrentTask];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 /*
@@ -88,6 +114,8 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma Actions on current VC
 
 - (IBAction)editTaskBarButtonPressed:(UIBarButtonItem *)sender
 {
