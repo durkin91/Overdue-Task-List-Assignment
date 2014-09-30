@@ -10,6 +10,7 @@
 #import "NDAddTaskViewController.h"
 #import <Accelerate/Accelerate.h>
 #import "ILTranslucentView.h"
+#import "NDDetailTaskViewController.h"
 
 @interface NDViewController ()
 
@@ -59,7 +60,13 @@
         if ([segue.destinationViewController isKindOfClass:[NDAddTaskViewController class]]) {
             NDAddTaskViewController *addTaskVC = segue.destinationViewController;
             addTaskVC.delegate = self;
-            
+        }
+    }
+    if ([sender isKindOfClass:[NSIndexPath class]]) {
+        if ([segue.destinationViewController isKindOfClass:[NDDetailTaskViewController class]]) {
+            NDDetailTaskViewController *detailTaskVC = segue.destinationViewController;
+            NSIndexPath *indexPath = sender;
+            detailTaskVC.task = [self.tasks objectAtIndex:indexPath.row];
         }
     }
 }
@@ -115,6 +122,20 @@
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //making the cell background clear
+    [cell setBackgroundColor:[UIColor clearColor]];
+    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+    [cell.detailTextLabel setBackgroundColor:[UIColor clearColor]];
+    [cell.contentView setBackgroundColor:[UIColor clearColor]];
+    
+    
+    
+//    NDTask *task = [self.tasks objectAtIndex:indexPath.row];
+//    if (task.completed == NO) {
+//        <#statements#>
+//    }
+   
+    
     //Add the completed? button
     UIImage *uncompletedTask = [UIImage imageNamed:@"UncompletedTaskIcon"];
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -129,11 +150,33 @@
     translucentView.alpha = .95;
     [cell setBackgroundView:translucentView];
     
-    [cell setBackgroundColor:[UIColor clearColor]];
-    [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-    [cell.detailTextLabel setBackgroundColor:[UIColor clearColor]];
-    [cell.contentView setBackgroundColor:[UIColor clearColor]];
+}
+
+#pragma Table View Delegate methods
+
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"toDetailVC" sender:indexPath];
+    return indexPath;
     
+}
+
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    //Find the appropriate task in the tasks array. If it is not completed, then set it to completed. If it is completed then set it to not completed.
+    NDTask *task = [self.tasks objectAtIndex:indexPath.row];
+    if (!task.completed) task.completed = YES;
+    else task.completed = NO;
+    
+    
+    //Save the updated data to NSUserdefaults. There may be a more efficient way of doing this by just changing the one object, and not the whole array??? Then reload the tableview
+    NSMutableArray *newUpdatedTasks = [[NSMutableArray alloc] init];
+    for (NDTask *task in self.tasks) {
+        [newUpdatedTasks addObject:[self taskAsPropertyList:task]];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:newUpdatedTasks forKey:ADDED_TASKS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.tableView reloadData];
 }
 
 #pragma helper methods

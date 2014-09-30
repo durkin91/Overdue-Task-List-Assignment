@@ -26,7 +26,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    //setup background image
+    self.view.layer.contents = (id)[UIImage imageNamed:@"BlurredBackgroundImage"].CGImage;
+    
+    self.taskTitleLabel.text = self.task.title;
+    self.taskDescriptionLabel.text = self.task.description;
+    //use helper method to have due date
+    
 }
 
 - (void)didReceiveMemoryWarning

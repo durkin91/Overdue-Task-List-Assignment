@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NDTask.h"
 
 @interface NDDetailTaskViewController : UIViewController
+@property (strong, nonatomic) NDTask *task;
 @property (strong, nonatomic) IBOutlet UILabel *taskTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *taskDueDateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *taskDescriptionLabel;
