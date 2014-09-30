@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1510877F19D9A226007C619C /* ILTranslucentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1510877E19D9A226007C619C /* ILTranslucentView.m */; };
 		1510878219DA47E2007C619C /* StyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1510878119DA47E2007C619C /* StyleKit.m */; };
+		1510878919DA8D23007C619C /* DATBlurSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1510878619DA8D23007C619C /* DATBlurSegue.m */; };
+		1510878A19DA8D23007C619C /* DATBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1510878819DA8D23007C619C /* DATBlurView.m */; };
 		15A3359819D82F350054FBFB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3359719D82F350054FBFB /* Foundation.framework */; };
 		15A3359A19D82F350054FBFB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3359919D82F350054FBFB /* CoreGraphics.framework */; };
 		15A3359C19D82F350054FBFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3359B19D82F350054FBFB /* UIKit.framework */; };
@@ -46,6 +48,10 @@
 		1510877E19D9A226007C619C /* ILTranslucentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILTranslucentView.m; sourceTree = "<group>"; };
 		1510878019DA47E2007C619C /* StyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleKit.h; sourceTree = "<group>"; };
 		1510878119DA47E2007C619C /* StyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleKit.m; sourceTree = "<group>"; };
+		1510878519DA8D23007C619C /* DATBlurSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DATBlurSegue.h; sourceTree = "<group>"; };
+		1510878619DA8D23007C619C /* DATBlurSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DATBlurSegue.m; sourceTree = "<group>"; };
+		1510878719DA8D23007C619C /* DATBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DATBlurView.h; sourceTree = "<group>"; };
+		1510878819DA8D23007C619C /* DATBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DATBlurView.m; sourceTree = "<group>"; };
 		15A3359419D82F350054FBFB /* Overdue Task List Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Overdue Task List Assignment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15A3359719D82F350054FBFB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15A3359919D82F350054FBFB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -106,12 +112,24 @@
 		1510878319DA47EE007C619C /* Styling classes */ = {
 			isa = PBXGroup;
 			children = (
+				1510878419DA8CDA007C619C /* Blur Modal  */,
 				1510877D19D9A226007C619C /* ILTranslucentView.h */,
 				1510877E19D9A226007C619C /* ILTranslucentView.m */,
 				1510878019DA47E2007C619C /* StyleKit.h */,
 				1510878119DA47E2007C619C /* StyleKit.m */,
 			);
 			name = "Styling classes";
+			sourceTree = "<group>";
+		};
+		1510878419DA8CDA007C619C /* Blur Modal  */ = {
+			isa = PBXGroup;
+			children = (
+				1510878519DA8D23007C619C /* DATBlurSegue.h */,
+				1510878619DA8D23007C619C /* DATBlurSegue.m */,
+				1510878719DA8D23007C619C /* DATBlurView.h */,
+				1510878819DA8D23007C619C /* DATBlurView.m */,
+			);
+			name = "Blur Modal ";
 			sourceTree = "<group>";
 		};
 		15A3358B19D82F350054FBFB = {
@@ -325,11 +343,13 @@
 				15A335AE19D82F350054FBFB /* NDViewController.m in Sources */,
 				1510877F19D9A226007C619C /* ILTranslucentView.m in Sources */,
 				15A335E019D952BE0054FBFB /* NDEditTaskViewController.m in Sources */,
+				1510878A19DA8D23007C619C /* DATBlurView.m in Sources */,
 				15A335D719D948210054FBFB /* NDAddTaskViewController.m in Sources */,
 				15A335A819D82F350054FBFB /* NDAppDelegate.m in Sources */,
 				15A335E519D965F10054FBFB /* NDTask.m in Sources */,
 				15A335DA19D94D350054FBFB /* NDDetailTaskViewController.m in Sources */,
 				1510878219DA47E2007C619C /* StyleKit.m in Sources */,
+				1510878919DA8D23007C619C /* DATBlurSegue.m in Sources */,
 				15A335A419D82F350054FBFB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

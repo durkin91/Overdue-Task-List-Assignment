@@ -28,6 +28,10 @@
     [super viewDidLoad];
     [self.descriptionTextField setDelegate:self];
     
+    //add placeholder text to text view
+    self.descriptionTextField.text = @"Description...";
+    self.descriptionTextField.textColor = [UIColor lightGrayColor];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,6 +39,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
     
+}
+
+#pragma Textview delegate
+
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"Description..."]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor];
+    }
+    [textView becomeFirstResponder];
+}
+
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"Description...";
+        textView.textColor = [UIColor lightGrayColor]; 
+    }
+    [textView resignFirstResponder];
 }
 
 /*

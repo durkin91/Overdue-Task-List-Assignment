@@ -68,6 +68,8 @@
             NDDetailTaskViewController *detailTaskVC = segue.destinationViewController;
             NSIndexPath *indexPath = sender;
             detailTaskVC.task = [self.tasks objectAtIndex:indexPath.row];
+            
+            //reset
         }
     }
 }
@@ -129,6 +131,9 @@
     [button addTarget:self action:@selector(checkButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
     cell.accessoryView = button;
     
+    //Change backgroud color of delete editingAccessory view. Not sure if this works though??
+    cell.editingAccessoryView.backgroundColor = [StyleKit red];
+    
     
     //Check if the task is completed. If not, change accessory icon to uncompleted icon and give it translucent background.
     if (task.completed == NO) {
@@ -189,6 +194,7 @@
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"toDetailVC" sender:indexPath];
+    [self.tableView reloadData];
     return indexPath;
     
 }
@@ -210,7 +216,32 @@
     [[NSUserDefaults standardUserDefaults] setObject:newUpdatedTasks forKey:ADDED_TASKS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self.tableView reloadData];
+
 }
+
+//Make sure each row is editable
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+//Supports editing the table view
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.tasks removeObjectAtIndex:indexPath.row];
+        NSMutableArray *newSavedTasksData = [[NSMutableArray alloc] init];
+        for (NDTask *task in self.tasks) {
+            [newSavedTasksData addObject:[self taskAsPropertyList:task]];
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:newSavedTasksData forKey:ADDED_TASKS_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+    }
+}
+
 
 #pragma helper methods
 

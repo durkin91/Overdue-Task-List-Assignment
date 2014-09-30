@@ -26,7 +26,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    //set delegates
+    [self.descriptionTextField setDelegate:self];
+    
+    //load in existing task's information
+    self.titleTextField.text = self.task.title;
+    self.descriptionTextField.text = self.task.description;
+    self.datePicker.date = self.task.dueDate;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,5 +55,10 @@
 */
 
 - (IBAction)saveTaskButtonPressed:(UIButton *)sender {
+}
+- (IBAction)addTaskButtonPressed:(UIButton *)sender {
+}
+
+- (IBAction)cancelButtonPressed:(UIButton *)sender {
 }
 @end

@@ -8,6 +8,7 @@
 
 #import "NDDetailTaskViewController.h"
 #import "ILTranslucentView.h"
+#import "NDEditTaskViewController.h"
 
 @interface NDDetailTaskViewController ()
 
@@ -28,7 +29,7 @@
 {
     [super viewDidLoad];
     
-    //setup background 
+    //setup background
     self.view.layer.contents = (id)[UIImage imageNamed:@"BlurredBackgroundImage"].CGImage;
     
     //setup nav bar
@@ -42,13 +43,14 @@
     self.navigationItem.leftBarButtonItem = backbarbutton;
     //[backbutton release];
     
-    //setup description text view appearance
-    self.taskDescriptionTextView.backgroundColor = [UIColor clearColor];
-    self.taskDescriptionTextView.textColor = [UIColor whiteColor];
     
     //setup content
     self.taskTitleLabel.text = self.task.title;
     self.taskDescriptionTextView.text = self.task.description;
+    
+    //setup description text view appearance
+    self.taskDescriptionTextView.backgroundColor = [UIColor clearColor];
+    self.taskDescriptionTextView.textColor = [UIColor whiteColor];
 
     //setup due date
     if (self.task.completed == YES) {
@@ -68,6 +70,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([sender isKindOfClass:[UIBarButtonItem class]] && [segue.destinationViewController isKindOfClass:[NDEditTaskViewController class]]) {
+        NDEditTaskViewController *editTaskVC = segue.destinationViewController;
+        editTaskVC.task = self.task;
+    }
+}
+
 /*
 #pragma mark - Navigation
 
@@ -79,7 +89,9 @@
 }
 */
 
-- (IBAction)editTaskBarButtonPressed:(UIBarButtonItem *)sender {
+- (IBAction)editTaskBarButtonPressed:(UIBarButtonItem *)sender
+{
+    [self performSegueWithIdentifier:@"toEditTaskVC" sender:sender];
 }
 
 -(IBAction)Btn_back:(id)sender
