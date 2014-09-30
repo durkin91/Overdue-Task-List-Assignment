@@ -11,6 +11,7 @@
 #import <Accelerate/Accelerate.h>
 #import "ILTranslucentView.h"
 #import "NDDetailTaskViewController.h"
+#import "StyleKit.h"
 
 @interface NDViewController ()
 
@@ -114,14 +115,7 @@
     //Configure the cell
     NDTask *task = [self.tasks objectAtIndex:indexPath.row];
     cell.textLabel.text = task.title;
-    cell.detailTextLabel.text = [self convertDateIntoDueDateFormat:task.dueDate];
     
-    return cell;
-    
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
     //making the cell background clear
     [cell setBackgroundColor:[UIColor clearColor]];
     [cell.textLabel setBackgroundColor:[UIColor clearColor]];
@@ -132,39 +126,68 @@
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = [UIColor clearColor];
+    [button addTarget:self action:@selector(checkButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
     cell.accessoryView = button;
-
+    
     
     //Check if the task is completed. If not, change accessory icon to uncompleted icon and give it translucent background.
-    NDTask *task = [self.tasks objectAtIndex:indexPath.row];
     if (task.completed == NO) {
         //change accessory icon
         UIImage *uncompletedTask = [UIImage imageNamed:@"UncompletedTaskIcon"];
         [button setBackgroundImage:uncompletedTask forState:UIControlStateNormal];
         
+        //change text color
+        cell.textLabel.textColor = [UIColor blackColor];
+        
+        //setup 'due in' label with the right colors by using containsString helper method to check if the string contains '0d'
+        NSString *dueDateString = [self convertDateIntoDueDateFormat:task.dueDate];
+        cell.detailTextLabel.text = dueDateString;
+        if ([dueDateString isEqualToString:@"OVERDUE"]) {
+            cell.detailTextLabel.textColor = [StyleKit red];
+        }
+        else if ([self containsString:@"0d" inString:dueDateString]) cell.detailTextLabel.textColor = [StyleKit orange];
+        else cell.detailTextLabel.textColor = [StyleKit green];
+        
         //change cell background to translucent
         ILTranslucentView *translucentView = [[ILTranslucentView alloc] initWithFrame:cell.frame];
         translucentView.alpha = .95;
         [cell setBackgroundView:translucentView];
-        
     }
-    
-    //keep background clear, change title to white with strikethrough, change accessory icon to completed
     else {
         //change icon
         UIImage *completedTask = [UIImage imageNamed:@"CompletedTaskIcon"];
         [button setBackgroundImage:completedTask forState:UIControlStateNormal];
-        
+
         //change formatting
         cell.textLabel.textColor = [UIColor whiteColor];
         NSDictionary* attributes = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]};
         NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:task.title attributes:attributes];
         cell.textLabel.attributedText = attributedString;
+        
+        //change text due date to 'COMPLETED'
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.text = @"COMPLETED";
+        
+        //making the cell background clear
+        [cell setBackgroundView:nil];
     }
-
-
+    
+    return cell;
     
 }
+
+//Check if custom accessory button is tapped
+- (void)checkButtonTapped:(id)sender event:(id)event
+{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint: currentTouchPosition];
+    if (indexPath != nil){
+        [self tableView: self.tableView accessoryButtonTappedForRowWithIndexPath: indexPath];
+    }
+}
+
 
 #pragma Table View Delegate methods
 
@@ -181,6 +204,7 @@
     NDTask *task = [self.tasks objectAtIndex:indexPath.row];
     if (!task.completed) task.completed = YES;
     else task.completed = NO;
+    NSLog(@"Task is completed? %d", task.completed);
     
     
     //Save the updated data to NSUserdefaults. There may be a more efficient way of doing this by just changing the one object, and not the whole array??? Then reload the tableview
@@ -215,8 +239,6 @@
     return taskPropertyList;
 }
 
-
-
 #pragma Other Methods
 
 //turn NSdate into a string that can be displayed in the cell
@@ -227,7 +249,7 @@
     int hoursLeft = (timeInterval % 86400) / 3600;
     
     NSString *dueIn;
-    if (timeInterval <= 0) {
+    if (timeInterval >= 0) {
         dueIn = [NSString stringWithFormat:@"Due in %id %ih", abs(daysLeft), abs(hoursLeft)];
     }
     else dueIn = @"OVERDUE";
@@ -235,7 +257,15 @@
     return dueIn;
 }
 
+//Use on dueDateString to check how long there is left, and apply colors to the detailTextLabel
+-(BOOL)containsString:(NSString *)littleString inString:(NSString *)bigString
+{
+    NSRange rangeValue = [bigString rangeOfString:littleString options:NSCaseInsensitiveSearch];
 
+    if (rangeValue.length > 0) return YES;
+    else return NO;
+
+}
 
 #pragma Actions
 

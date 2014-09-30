@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1510877F19D9A226007C619C /* ILTranslucentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1510877E19D9A226007C619C /* ILTranslucentView.m */; };
+		1510878219DA47E2007C619C /* StyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1510878119DA47E2007C619C /* StyleKit.m */; };
 		15A3359819D82F350054FBFB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3359719D82F350054FBFB /* Foundation.framework */; };
 		15A3359A19D82F350054FBFB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3359919D82F350054FBFB /* CoreGraphics.framework */; };
 		15A3359C19D82F350054FBFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3359B19D82F350054FBFB /* UIKit.framework */; };
@@ -43,6 +44,8 @@
 /* Begin PBXFileReference section */
 		1510877D19D9A226007C619C /* ILTranslucentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILTranslucentView.h; sourceTree = "<group>"; };
 		1510877E19D9A226007C619C /* ILTranslucentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILTranslucentView.m; sourceTree = "<group>"; };
+		1510878019DA47E2007C619C /* StyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleKit.h; sourceTree = "<group>"; };
+		1510878119DA47E2007C619C /* StyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleKit.m; sourceTree = "<group>"; };
 		15A3359419D82F350054FBFB /* Overdue Task List Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Overdue Task List Assignment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15A3359719D82F350054FBFB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		15A3359919D82F350054FBFB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -100,6 +103,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1510878319DA47EE007C619C /* Styling classes */ = {
+			isa = PBXGroup;
+			children = (
+				1510877E19D9A226007C619C /* ILTranslucentView.m */,
+				1510878019DA47E2007C619C /* StyleKit.h */,
+				1510878119DA47E2007C619C /* StyleKit.m */,
+			);
+			name = "Styling classes";
+			sourceTree = "<group>";
+		};
 		15A3358B19D82F350054FBFB = {
 			isa = PBXGroup;
 			children = (
@@ -205,7 +218,7 @@
 				15A335DE19D952BE0054FBFB /* NDEditTaskViewController.h */,
 				15A335DF19D952BE0054FBFB /* NDEditTaskViewController.m */,
 				1510877D19D9A226007C619C /* ILTranslucentView.h */,
-				1510877E19D9A226007C619C /* ILTranslucentView.m */,
+				1510878319DA47EE007C619C /* Styling classes */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -316,6 +329,7 @@
 				15A335A819D82F350054FBFB /* NDAppDelegate.m in Sources */,
 				15A335E519D965F10054FBFB /* NDTask.m in Sources */,
 				15A335DA19D94D350054FBFB /* NDDetailTaskViewController.m in Sources */,
+				1510878219DA47E2007C619C /* StyleKit.m in Sources */,
 				15A335A419D82F350054FBFB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
