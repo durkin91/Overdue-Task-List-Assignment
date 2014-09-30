@@ -7,6 +7,7 @@
 //
 
 #import "NDDetailTaskViewController.h"
+#import "ILTranslucentView.h"
 
 @interface NDDetailTaskViewController ()
 
@@ -27,7 +28,7 @@
 {
     [super viewDidLoad];
     
-    //setup background image
+    //setup background 
     self.view.layer.contents = (id)[UIImage imageNamed:@"BlurredBackgroundImage"].CGImage;
     
     //setup nav bar
@@ -41,10 +42,14 @@
     self.navigationItem.leftBarButtonItem = backbarbutton;
     //[backbutton release];
     
+    //setup description text view appearance
+    self.taskDescriptionTextView.backgroundColor = [UIColor clearColor];
+    self.taskDescriptionTextView.textColor = [UIColor whiteColor];
+    
     //setup content
     self.taskTitleLabel.text = self.task.title;
-    self.taskDescriptionLabel.text = self.task.description;
-    
+    self.taskDescriptionTextView.text = self.task.description;
+
     //setup due date
     if (self.task.completed == YES) {
         self.taskDueDateLabel.textColor = [UIColor whiteColor];

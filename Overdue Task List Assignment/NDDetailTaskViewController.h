@@ -13,7 +13,8 @@
 @property (strong, nonatomic) NDTask *task;
 @property (strong, nonatomic) IBOutlet UILabel *taskTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *taskDueDateLabel;
-@property (strong, nonatomic) IBOutlet UILabel *taskDescriptionLabel;
+@property (strong, nonatomic) IBOutlet UITextView *taskDescriptionTextView;
+
 
 
 - (IBAction)editTaskBarButtonPressed:(UIBarButtonItem *)sender;

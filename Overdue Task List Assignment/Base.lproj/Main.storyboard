@@ -92,13 +92,14 @@
                                 <color key="textColor" red="0.53333333329999999" green="0.75294117650000003" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="RUz-fd-Vfo">
-                                <rect key="frame" x="20" y="136" width="280" height="22"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="qLg-rI-1MR">
+                                <rect key="frame" x="15" y="136" width="290" height="187"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="scrollIndicatorInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -111,7 +112,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="taskDescriptionLabel" destination="RUz-fd-Vfo" id="Tl1-R7-MEu"/>
+                        <outlet property="taskDescriptionTextView" destination="qLg-rI-1MR" id="Jn7-8e-8PM"/>
                         <outlet property="taskDueDateLabel" destination="jtV-Tf-hPi" id="4zd-O2-GLN"/>
                         <outlet property="taskTitleLabel" destination="ahF-6n-6vA" id="cIv-eT-cbL"/>
                         <segue destination="35r-Yd-T80" kind="push" id="WG6-Tx-drL"/>
