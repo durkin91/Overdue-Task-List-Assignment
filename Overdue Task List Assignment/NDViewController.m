@@ -238,35 +238,35 @@
     return 28;
 }
 
-//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-//{
-//    if (section == 2) {
-//        
-//        //create background view and make transparent
-//        UIView *clearTasksView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 55)];
-//        clearTasksView.backgroundColor = [UIColor clearColor];
-//        
-//        //Format the button
-//        UIButton *clearTasksButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 22, self.tableView.frame.size.width, 14)];
-//        [clearTasksButton setTitle:@"CLEAR COMPLETED TASKS" forState:UIControlStateNormal];
-//        clearTasksButton.tintColor = [UIColor whiteColor];
-//        clearTasksButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:10];
-//        
-//        //Format the button's action events
-//        [clearTasksButton addTarget:self action:@selector(clearTasksButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        [clearTasksView addSubview:clearTasksButton];
-//        return clearTasksView;
-//    }
-//    else return nil;
-//}
-//
-//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    if (section == 0) return 0;
-//    else if (section == 1) return 0;
-//    else return 55;
-//}
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (section == 2) {
+        
+        //create background view and make transparent
+        UIView *clearTasksView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 55)];
+        clearTasksView.backgroundColor = [UIColor clearColor];
+        
+        //Format the button
+        UIButton *clearTasksButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 22, self.tableView.frame.size.width, 14)];
+        [clearTasksButton setTitle:@"CLEAR COMPLETED TASKS" forState:UIControlStateNormal];
+        clearTasksButton.tintColor = [UIColor whiteColor];
+        clearTasksButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:10];
+        
+        //Format the button's action events
+        [clearTasksButton addTarget:self action:@selector(clearTasksButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [clearTasksView addSubview:clearTasksButton];
+        return clearTasksView;
+    }
+    else return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (section == 0) return 0;
+    else if (section == 1) return 0;
+    else return 55;
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -566,13 +566,11 @@
     [self performSegueWithIdentifier:@"toAddTaskVC" sender:sender];
 }
 
-//-(void)clearTasksButtonPressed:(UIButton *)sender
-//{
-//    for (NDTask *task in self.completedTasks) {
-//        [self.completedTasks removeObject:task];
-//    }
-//    [self saveAnIndividualArray:self.completedTasks toNSUserDefaultsKey:COMPLETED_TASKS_KEY];
-//    [self.tableView reloadData];
-//}
+-(void)clearTasksButtonPressed:(UIButton *)sender
+{
+    [self.completedTasks removeAllObjects];
+    [self saveAnIndividualArray:self.completedTasks toNSUserDefaultsKey:COMPLETED_TASKS_KEY];
+    [self.tableView reloadData];
+}
 
 @end

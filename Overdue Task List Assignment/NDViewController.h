@@ -20,6 +20,6 @@
 
 - (IBAction)reorderTaskBarButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)addTaskBarButtonPressed:(UIBarButtonItem *)sender;
-//-(void)clearTasksButtonPressed:(UIButton *)sender;
+-(void)clearTasksButtonPressed:(UIButton *)sender;
 
 @end
