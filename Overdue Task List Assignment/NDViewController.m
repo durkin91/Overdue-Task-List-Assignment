@@ -41,6 +41,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"AvenirNext-Regular" size:17], NSFontAttributeName, nil]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
+    
     //retrieve the array of uncompleted task property lists, and turn them into task objects and save them in the tasks array property.
     NSArray *tasksAsPropertyLists = [[NSUserDefaults standardUserDefaults] objectForKey:ADDED_TASKS_KEY];
     [self populateArray:self.tasks withTasksFromPropertyLists:tasksAsPropertyLists];
@@ -79,7 +80,7 @@
         if ([segue.destinationViewController isKindOfClass:[NDDetailTaskViewController class]]) {
             NDDetailTaskViewController *detailTaskVC = segue.destinationViewController;
             NSIndexPath *indexPath = sender;
-            detailTaskVC.task = [self.tasks objectAtIndex:indexPath.row];
+            detailTaskVC.task = [[self correctArrayBasedOnIndexPath:indexPath] objectAtIndex:indexPath.row];
             detailTaskVC.indexPath = indexPath;
             detailTaskVC.delegate = self;
         }
