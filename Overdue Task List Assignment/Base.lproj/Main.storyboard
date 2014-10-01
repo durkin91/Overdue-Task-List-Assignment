@@ -40,6 +40,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="vXZ-lx-hvc" id="1NF-1l-Ib7"/>
+                            <outlet property="delegate" destination="vXZ-lx-hvc" id="Hrw-OS-ZCz"/>
+                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Task List" id="Qxw-8g-TR1">
                         <barButtonItem key="leftBarButtonItem" image="ReorderListIcon" id="bYx-hU-xtt">

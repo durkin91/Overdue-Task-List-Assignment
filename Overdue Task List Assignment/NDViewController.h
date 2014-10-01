@@ -13,6 +13,8 @@
 @interface NDViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NDAddTaskViewControllerDelegate, NDDetailTaskVCDelegate>
 
 @property (strong, nonatomic) NSMutableArray *tasks;
+@property (strong, nonatomic) NSMutableArray *completedTasks;
+@property (strong, nonatomic) NSMutableArray *overdueTasks;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

@@ -10,7 +10,6 @@
 #import "NDTask.h"
 #import "NDEditTaskViewController.h"
 
-#define ADDED_TASKS_KEY @"Added Tasks Array"
 
 @protocol NDDetailTaskVCDelegate <NSObject>
 
