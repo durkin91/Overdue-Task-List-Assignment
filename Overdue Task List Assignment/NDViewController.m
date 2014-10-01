@@ -193,14 +193,6 @@
 #pragma mark Table View Data Source
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    int number = 0;
-//    if ([self.tasks count])
-//        number = number + 1;
-//    if ([self.overdueTasks count])
-//        number = number + 1;
-//    if ([self.completedTasks count])
-//        number = number + 1;
-//    NSLog(@"Number of sections: %i", number);
     return 3;
 }
 
@@ -235,7 +227,9 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 28;
+    if ([self.tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0)
+        return 0;
+    else return 28;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -265,7 +259,11 @@
 {
     if (section == 0) return 0;
     else if (section == 1) return 0;
-    else return 55;
+    else {
+        if ([self.tableView.dataSource tableView:tableView numberOfRowsInSection:2] == 0)
+            return 0;
+        else return 28;
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
