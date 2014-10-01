@@ -14,6 +14,7 @@
 @protocol NDDetailTaskVCDelegate <NSObject>
 
 -(void)saveTask:(NDTask *)task atIndexPath:(NSIndexPath *)indexPath;
+-(void)didChangeCompletionStatus:(UIButton *)button withLabel:(UILabel *)label atIndexPath:(NSIndexPath *)indexPath;
 
 @end
 

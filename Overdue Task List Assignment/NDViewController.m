@@ -28,6 +28,18 @@
 {
     [super viewDidLoad];
     
+    //temporarily clear out all arrays
+//    [self.tasks removeAllObjects];
+//    [self saveAnIndividualArray:self.tasks toNSUserDefaultsKey:ADDED_TASKS_KEY];
+//    
+//    [self.completedTasks removeAllObjects];
+//    [self saveAnIndividualArray:self.completedTasks toNSUserDefaultsKey:COMPLETED_TASKS_KEY];
+//    
+//    [self.completedTasks removeAllObjects];
+//    [self saveAnIndividualArray:self.overdueTasks toNSUserDefaultsKey:OVERDUE_TASKS_KEY];
+    
+    
+    
     //Make the navigation bar transparent
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
@@ -134,17 +146,47 @@
 
 -(void)saveTask:(NDTask *)task atIndexPath:(NSIndexPath *)indexPath
 {
+    //check whether the task is overdue. If it is it needs to be placed in the overdue section
     NSMutableArray *arrayOfTasks = [self correctArrayBasedOnIndexPath:indexPath];
-    [arrayOfTasks replaceObjectAtIndex:indexPath.row withObject:task];
+    [arrayOfTasks removeObjectAtIndex:indexPath.row];
     
-    NSMutableArray *editedTasks = [[NSMutableArray alloc] init];
-    for (NDTask *task in arrayOfTasks) {
-        [editedTasks addObject:[self taskAsPropertyList:task]];
-    }
+    if (([task.dueDate timeIntervalSinceNow] < 0.0) && task.completed == NO)
+        [self.overdueTasks addObject:task];
+    else if ([task.dueDate timeIntervalSinceNow] >= 0.0 && task.completed == NO)
+        [self.tasks addObject:task];
+    else
+        [self.completedTasks addObject:task];
+
+//    [arrayOfTasks replaceObjectAtIndex:indexPath.row withObject:task];
+//    
+//    NSMutableArray *editedTasks = [[NSMutableArray alloc] init];
+//    for (NDTask *task in arrayOfTasks) {
+//        [editedTasks addObject:[self taskAsPropertyList:task]];
+//    }
     
     [self saveTasksToNSUserDefaults];
     [self.tableView reloadData];
 
+}
+
+-(void)didChangeCompletionStatus:(UIButton *)button withLabel:(UILabel *)label atIndexPath:(NSIndexPath *)indexPath
+{
+    NDTask *task = [self taskWithIndexPath:indexPath];
+    if (!task.completed) {
+        [button setBackgroundImage:[UIImage imageNamed:@"WhiteCompletedTaskIcon"] forState:UIControlStateNormal];
+        label.text = @"COMPLETED";
+        label.textColor = [UIColor whiteColor];
+    }
+    else {
+        [button setBackgroundImage:[UIImage imageNamed:@"WhiteUncompletedTaskIcon"] forState:UIControlStateNormal];
+        
+        //setup due date label
+        label.text = [task convertDateIntoDueDateFormat];
+        label.textColor = [task colorForDueDateString];
+    }
+    
+    [self setTaskCompletionStatusAndPersist:indexPath];
+    [self.tableView reloadData];
 }
 
 
@@ -152,9 +194,12 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 //    int number = 0;
-//    if ([self.tasks count]) number = number + 1;
-//    if ([self.overdueTasks count]) number = number + 1;
-//    if ([self.completedTasks count]) number = number + 1;
+//    if ([self.tasks count])
+//        number = number + 1;
+//    if ([self.overdueTasks count])
+//        number = number + 1;
+//    if ([self.completedTasks count])
+//        number = number + 1;
 //    NSLog(@"Number of sections: %i", number);
     return 3;
 }
@@ -192,6 +237,36 @@
 {
     return 28;
 }
+
+//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    if (section == 2) {
+//        
+//        //create background view and make transparent
+//        UIView *clearTasksView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 55)];
+//        clearTasksView.backgroundColor = [UIColor clearColor];
+//        
+//        //Format the button
+//        UIButton *clearTasksButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 22, self.tableView.frame.size.width, 14)];
+//        [clearTasksButton setTitle:@"CLEAR COMPLETED TASKS" forState:UIControlStateNormal];
+//        clearTasksButton.tintColor = [UIColor whiteColor];
+//        clearTasksButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:10];
+//        
+//        //Format the button's action events
+//        [clearTasksButton addTarget:self action:@selector(clearTasksButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        [clearTasksView addSubview:clearTasksButton];
+//        return clearTasksView;
+//    }
+//    else return nil;
+//}
+//
+//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    if (section == 0) return 0;
+//    else if (section == 1) return 0;
+//    else return 55;
+//}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -304,38 +379,8 @@
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    //Find the appropriate task in the appropriate array. If it is not completed, then set it to completed. If it is completed then set it to not completed.
-    
-    NDTask *task = [self taskWithIndexPath:indexPath];
-    if (!task.completed) {
-        task.completed = YES;
-        
-        //move overdue task to completed array
-        if (indexPath.section == 0) {
-            [self.overdueTasks removeObjectAtIndex:indexPath.row];
-            [self.completedTasks addObject:task];
-        }
-        //move uncompleted task to completed array
-        else if (indexPath.section == 1) {
-            [self.tasks removeObjectAtIndex:indexPath.row];
-            [self.completedTasks addObject:task];
-        }
-    }
-    else {
-        task.completed = NO;
-        [self.completedTasks removeObjectAtIndex:indexPath.row];
-        
-        //Check to see if its overdue
-        NSString *dueDate = [task convertDateIntoDueDateFormat];
-        if ([dueDate isEqualToString:@"OVERDUE"]) {
-            [self.overdueTasks addObject:task];
-        }
-        else [self.tasks addObject:task];
-    }
-    NSLog(@"Task is completed? %d", task.completed);
-
-    //Save the updated data to NSUserdefaults. Then reload the tableview
-    [self saveTasksToNSUserDefaults];
+    //Use the helper methods to change the completion status and persist to NSuserdefaults, then reload table view
+    [self setTaskCompletionStatusAndPersist:indexPath];
     [self.tableView reloadData];
 }
 
@@ -384,6 +429,15 @@
 
     [self saveTasksToNSUserDefaults];
     [self.tableView reloadData];
+}
+
+//Disable dragging a cell to the overdue section
+-(NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath
+{
+    if (proposedDestinationIndexPath.section == 0) {
+        return sourceIndexPath;
+    }
+    else return proposedDestinationIndexPath;
 }
 
 
@@ -472,6 +526,31 @@
     else return self.completedTasks;
 }
 
+//Set and persist the task's completion status.
+-(void)setTaskCompletionStatusAndPersist:(NSIndexPath *)indexPath
+{
+    NDTask *task = [self taskWithIndexPath:indexPath];
+    NSMutableArray *correctArray = [self correctArrayBasedOnIndexPath:indexPath];
+    
+    if (!task.completed) {
+        task.completed = YES;
+        [correctArray removeObjectAtIndex:indexPath.row];
+        [self.completedTasks addObject:task];
+    }
+    else {
+        task.completed = NO;
+        [correctArray removeObjectAtIndex:indexPath.row];
+        
+        //Check to see if its overdue
+        NSString *dueDate = [task convertDateIntoDueDateFormat];
+        if ([dueDate isEqualToString:@"OVERDUE"]) {
+            [self.overdueTasks addObject:task];
+        }
+        else [self.tasks addObject:task];
+    }
+    [self saveTasksToNSUserDefaults];
+}
+
 #pragma mark Actions
 
 - (IBAction)reorderTaskBarButtonPressed:(UIBarButtonItem *)sender
@@ -486,5 +565,14 @@
 {
     [self performSegueWithIdentifier:@"toAddTaskVC" sender:sender];
 }
+
+//-(void)clearTasksButtonPressed:(UIButton *)sender
+//{
+//    for (NDTask *task in self.completedTasks) {
+//        [self.completedTasks removeObject:task];
+//    }
+//    [self saveAnIndividualArray:self.completedTasks toNSUserDefaultsKey:COMPLETED_TASKS_KEY];
+//    [self.tableView reloadData];
+//}
 
 @end
